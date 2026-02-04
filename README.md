@@ -80,3 +80,38 @@ Docker services include:
 1. Clone the repository
    ```bash
    git clone https://github.com/your-username/your-repo-name.git
+````
+
+2. Navigate to the project directory
+
+   ```bash
+   cd spring-boot-ecommerce
+   ```
+3. Start the application using Docker Compose
+
+   ```bash
+   docker-compose up --build
+   ```
+4. Access the application
+
+   ```
+   http://localhost:8080
+   ```
+
+---
+
+## 📌 Future Enhancements
+
+* Payment gateway integration
+* Pagination and filtering
+* API documentation with Swagger/OpenAPI
+* CI/CD pipeline integration
+* Cloud deployment
+
+
+## 👤 Author
+
+**Moshek Shaju Jones J**
+Java Developer
+LinkedIn: [https://www.linkedin.com/in/msjones07](https://www.linkedin.com/in/msjones07)
+
