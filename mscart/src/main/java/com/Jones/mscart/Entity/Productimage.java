@@ -1,50 +1,38 @@
 package com.Jones.mscart.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 @Entity
+@Table(name = "product_images")
 public class Productimage {
-
-    public Productimage() { } // JPA needs no-arg constructor
-
-    public Productimage(Long id, String publicid, String url) {
-        this.id = id;
-        this.publicid = publicid;
-        this.url = url;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String publicid;
+    @Column(nullable = false)
     private String url;
 
-    // getters / setters
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    @JsonBackReference
+    private Products product;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Constructors, getters, setters
+    public Productimage() {}
 
-    public String getPublicid() {
-        return publicid;
-    }
-
-    public void setPublicid(String publicid) {
-        this.publicid = publicid;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
+    public Productimage(String url, Products product) {
         this.url = url;
+        this.product = product;
     }
+
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getUrl() { return url; }
+    public void setUrl(String url) { this.url = url; }
+
+    public Products getProduct() { return product; }
+    public void setProduct(Products product) { this.product = product; }
 }

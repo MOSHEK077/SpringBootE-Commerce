@@ -1,0 +1,32 @@
+services:
+  mscart-db:
+    image: mysql:8.0
+    container_name: mscart-db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "3307:3306"   # 👈 THIS IS THE KEY
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  mscart-backend:
+    container_name: mscart-backend
+    build: .
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      mscart-db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"

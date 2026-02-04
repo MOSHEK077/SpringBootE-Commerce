@@ -1,17 +1,16 @@
 package com.Jones.mscart.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "product_reviews")
 public class ProductReview {
 
-    public ProductReview() { } // required by JPA
+    public ProductReview() {}
 
     public ProductReview(Long id, Integer rating, String comment) {
         this.id = id;
@@ -30,28 +29,23 @@ public class ProductReview {
 
     private String comment;
 
-    // getters / setters
-    public Long getId() {
-        return id;
-    }
+    // FOREIGN KEY to products.id — use a different column than 'id'
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    //@JsonIgnore
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Products product;
 
-    public Integer getRating() {
-        return rating;
-    }
+    // constructors, getters, setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
+    public Integer getRating() { return rating; }
+    public void setRating(Integer rating) { this.rating = rating; }
 
-    public String getComment() {
-        return comment;
-    }
+    public String getComment() { return comment; }
+    public void setComment(String comment) { this.comment = comment; }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+    public Products getProduct() { return product; }
+    public void setProduct(Products product) { this.product = product; }
 }
